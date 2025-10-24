@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  noaa-collector:
+    build: .
+    container_name: noaa-data-collector
+    restart: unless-stopped
+    environment:
+      # Collection interval in seconds (3600 = 1 hour)
+      - COLLECTION_INTERVAL=3600
+      
+      # Timezone for timestamps
+      - TZ=America/Anchorage
+      
+      # NDBC Buoy Stations (comma-separated)
+      # Examples:
+      #   Bering Sea: 46073,46035
+      #   Atlantic: 41001,41002
+      #   Pacific: 51000,51001
+      #   Gulf of Mexico: 42001,42002
+      - BUOY_STATIONS=46073,46035
+      
+      # CO-OPS Tide Station
+      # Examples:
+      #   Unalaska, AK: 9464212
+      #   Providence, RI: 8454000
+      #   San Francisco, CA: 9414290
+      #   Galveston, TX: 8729108
+      - TIDE_STATION=9464212
+      
+      # Data directory (inside container)
+      - DATA_DIR=/app/data
+    volumes:
+      # Mount data directory to persist collected data
+      - ./data:/app/data
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+# Find station IDs:
+# - Buoys: https://www.ndbc.noaa.gov/
+# - Tides: https://tidesandcurrents.noaa.gov/

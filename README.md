@@ -59,15 +59,58 @@ Or use the helper scripts from `/opt/dockers/noaa-data-collector/`:
 
 ## Configuration
 
-Default collection interval: **1 hour**
+Edit the `.env` file or set environment variables in `docker-compose.yml`:
 
-To change, edit `/opt/dockers/docker-compose.yml` in the `noaa-collector` service:
+```env
+# Collection interval in seconds (default: 1 hour)
+COLLECTION_INTERVAL=3600
+
+# Timezone for timestamps
+TZ=America/Anchorage
+
+# NDBC Buoy Stations (comma-separated)
+BUOY_STATIONS=46073,46035
+
+# CO-OPS Tide Station
+TIDE_STATION=9464212
+```
+
+### Monitor Different Stations
+
+**For Atlantic buoys:**
+```env
+BUOY_STATIONS=41001,41002
+TIDE_STATION=8454000
+TZ=America/New_York
+```
+
+**For Pacific buoys:**
+```env
+BUOY_STATIONS=51000,51001
+TIDE_STATION=9414290
+TZ=America/Los_Angeles
+```
+
+**For Gulf of Mexico:**
+```env
+BUOY_STATIONS=42001,42002
+TIDE_STATION=8729108
+TZ=America/Chicago
+```
+
+Find station IDs:
+- **Buoys**: https://www.ndbc.noaa.gov/
+- **Tides**: https://tidesandcurrents.noaa.gov/
+
+### Change Collection Interval
+
+To collect data more frequently, modify `docker-compose.yml`:
+
 ```yaml
 environment:
   - COLLECTION_INTERVAL=1800  # 30 minutes in seconds
 ```
 
-Then restart:
 ```bash
 cd /opt/dockers
 sudo docker compose restart noaa-collector

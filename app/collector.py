@@ -20,15 +20,16 @@ from monitor import StationMonitor
 
 
 # Configuration
-TIMEZONE = ZoneInfo("America/Anchorage")
+TIMEZONE = ZoneInfo(os.getenv("TZ", "America/Anchorage"))
 DATA_DIR = os.getenv("DATA_DIR", "/app/data")
 COLLECTION_INTERVAL = int(os.getenv("COLLECTION_INTERVAL", "3600"))  # seconds
 
-# NDBC Buoy Stations
-BUOY_STATIONS = ["46073", "46035"]
+# NDBC Buoy Stations (from environment variable)
+BUOY_STATIONS = os.getenv("BUOY_STATIONS", "46073,46035").split(",")
+BUOY_STATIONS = [s.strip() for s in BUOY_STATIONS if s.strip()]
 
-# CO-OPS Tide Station
-TIDE_STATION = "9464212"
+# CO-OPS Tide Station (from environment variable)
+TIDE_STATION = os.getenv("TIDE_STATION", "9464212")
 
 # Setup logging
 logging.basicConfig(
