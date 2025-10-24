@@ -1,0 +1,113 @@
+# NOAA Data Collector
+
+Automated Docker application for collecting real-time data from Alaska NOAA buoy and tide stations.
+
+## Quick Start
+
+```bash
+cd /opt/dockers
+sudo docker compose up -d noaa-collector
+```
+
+Or use the helper script:
+```bash
+cd /opt/dockers/noaa-data-collector
+./start.sh
+```
+
+## Stations Monitored
+
+- **Buoy 46073**: Southeast Bering Sea (205 NM WNW of Dutch Harbor)
+- **Buoy 46035**: Central Bering Sea (310 NM North of Adak)
+- **Tide 9464212**: Unalaska, AK
+
+## Data Location
+
+Data is stored in `./data/`:
+- `buoy_46073.csv` - Buoy 46073 meteorological data
+- `buoy_46035.csv` - Buoy 46035 meteorological data
+- `tide_9464212.csv` - Tide station water level data
+- `collector.log` - Application logs
+
+## Common Commands
+
+```bash
+# Start collector
+cd /opt/dockers
+sudo docker compose up -d noaa-collector
+
+# Stop collector
+sudo docker compose stop noaa-collector
+
+# View logs
+sudo docker compose logs -f noaa-collector
+
+# Check status
+sudo docker compose ps noaa-collector
+
+# Restart collector
+sudo docker compose restart noaa-collector
+```
+
+Or use the helper scripts from `/opt/dockers/noaa-data-collector/`:
+```bash
+./start.sh   # Start
+./stop.sh    # Stop
+./logs.sh    # View logs
+./status.sh  # Check status
+```
+
+## Configuration
+
+Default collection interval: **1 hour**
+
+To change, edit `/opt/dockers/docker-compose.yml` in the `noaa-collector` service:
+```yaml
+environment:
+  - COLLECTION_INTERVAL=1800  # 30 minutes in seconds
+```
+
+Then restart:
+```bash
+cd /opt/dockers
+sudo docker compose restart noaa-collector
+```
+
+## Features
+
+### Complete Timeline Tracking
+- **Every collection attempt recorded** - Even when stations are offline
+- **Failed attempts marked** - `FAILED` markers maintain timeline continuity
+- **No gaps in timeline** - Always know when collections occurred
+- **Easy analysis** - Filter out failures or analyze outage patterns
+
+See [TIMELINE.md](TIMELINE.md) for details.
+
+### Station Health Monitoring
+- **Station availability and uptime tracking**
+- **Outage detection and recovery**
+- **Historical performance data**
+- **Never generates fake data**
+- **Never gives up on stations**
+
+### View Station Status
+
+```bash
+cd /opt/dockers/noaa-data-collector
+./view_status.sh
+```
+
+See [MONITORING.md](MONITORING.md) for complete monitoring documentation.
+
+## Full Documentation
+
+- **[TIMELINE.md](TIMELINE.md)** - Timeline continuity and failed attempt tracking
+- **[DATA_DICTIONARY.md](DATA_DICTIONARY.md)** - Complete field definitions and units
+- **[MONITORING.md](MONITORING.md)** - Station health monitoring system
+- **[docs/README.md](docs/README.md)** - Complete technical documentation
+- **[QUICKSTART.md](QUICKSTART.md)** - Quick start guide
+- **[INTEGRATION.md](INTEGRATION.md)** - Docker integration details
+
+## Timezone
+
+All timestamps are in **America/Anchorage** timezone.
