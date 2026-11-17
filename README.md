@@ -154,3 +154,7 @@ See [MONITORING.md](MONITORING.md) for complete monitoring documentation.
 ## Timezone
 
 All timestamps are in **America/Anchorage** timezone.
+
+## License
+
+MIT. See [LICENSE](LICENSE).
