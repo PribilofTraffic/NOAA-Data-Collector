@@ -4,7 +4,7 @@ services:
   noaa-collector:
     build: .
     container_name: noaa-data-collector
-    restart: unless-stopped
+    restart: always
     environment:
       # Collection interval in seconds (3600 = 1 hour)
       - COLLECTION_INTERVAL=3600

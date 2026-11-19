@@ -13,7 +13,7 @@ The service is now defined in `/opt/dockers/docker-compose.yml` as `noaa-collect
 noaa-collector:
   build: ./noaa-data-collector
   container_name: noaa-data-collector
-  restart: unless-stopped
+  restart: always
   volumes:
     - ./noaa-data-collector/data:/app/data
   environment:
