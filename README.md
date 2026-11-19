@@ -155,6 +155,20 @@ See [MONITORING.md](MONITORING.md) for complete monitoring documentation.
 
 All timestamps are in **America/Anchorage** timezone.
 
+## Where this came from
+
+The idea is older than the AI help. It began years ago as a hand-written script that collected buoy and tide
+readings for the waters around the islands.
+It was written and run that way, without AI, long before any was involved.
+
+AI came later, as an assistant. Claude helped tidy the code, add tests, find
+bugs and package it as a container other people can run. The ideas, and the
+judgement about what matters on these islands, are the maintainer's own.
+
+Most of the Pribilof Traffic collectors started on Raspberry Pis, and
+Raspberry Pis on the islands still run the webcam and the aircraft (tar1090)
+and ACARS receivers today.
+
 ## License
 
 MIT. See [LICENSE](LICENSE).
